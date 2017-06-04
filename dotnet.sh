@@ -30,7 +30,7 @@ _dotnet()
 
 		test)
 			_dotnet_test
-		;;	
+		;;
 
 		pack)
 			_dotnet_pack
@@ -39,7 +39,7 @@ _dotnet()
 		migrate)
 			_dotnet_migrate
 		;;
-		
+
 		clean)
 			_dotnet_clean
 		;;
@@ -76,7 +76,7 @@ _dotnet_new()
 {
 	local template="${COMP_WORDS[2]}"
 
-	case "${prev}" in 
+	case "${prev}" in
 		new)
 			opts="console classlib mstest xunit web mvc webapi sln"
 			COMPREPLY=( $(compgen -W "${opts}" ${cur}) )
@@ -332,7 +332,7 @@ _dotnet_clean()
 {
 	case ${prev} in
 		clean)
-			if [[ ${cur} != -*]] ; then
+			if [[ ${cur} != -* ]] ; then
 				COMPREPLY=( $(compgen -f "${cur}") )
 				return 0
 			else
@@ -361,7 +361,7 @@ _dotnet_sln()
 {
 	case ${prev} in
 		sln)
-			if [[ ${cur} != -*]] ; then
+			if [[ ${cur} != -* ]] ; then
 				COMPREPLY=( $(compgen -f "${cur}") )
 				return 0
 			else
