@@ -4,7 +4,11 @@ _dotnet()
 	COMPREPLY=()
 	cur="${COMP_WORDS[COMP_CWORD]}"
 	prev="${COMP_WORDS[COMP_CWORD-1]}"
-	prev2="${COMP_WORDS[COMP_CWORD-2]}"
+	if (( $COMP_CWORD == 1 )); then
+		prev2=""
+	elif (( $COMP_CWORD == 2 )); then
+		prev2="${COMP_WORDS[COMP_CWORD-2]}"
+	fi
 	cmd=$"${COMP_WORDS[1]}"
 
 	case "${cmd}" in
@@ -361,7 +365,7 @@ _dotnet_sln()
 {
 	case ${prev} in
 		sln)
-			if [[ ${cur} != -* ]] ; then
+			if [[ ${cur} != -* 	]] ; then
 				COMPREPLY=( $(compgen -f "${cur}") )
 				return 0
 			else
