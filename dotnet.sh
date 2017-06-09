@@ -365,8 +365,9 @@ _dotnet_sln()
 {
 	case ${prev} in
 		sln)
-			if [[ ${cur} != -* 	]] ; then
-				COMPREPLY=( $(compgen -f "${cur}") )
+			if [[ ${cur} != -* ]] ; then
+				opts="add remove list"
+				COMPREPLY=( $(compgen -W "${opts}" ${cur}) )
 				return 0
 			else
 				opts="--help"
@@ -374,6 +375,28 @@ _dotnet_sln()
 				return 0
 			fi
 
+		;;
+
+		add)
+			if [[ ${cur} != -* ]] ; then
+				COMPREPLY=( $(compgen -f "${cur}") )
+				return 0
+			else
+				opts="--help"
+				COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+				return 0
+			fi
+		;;
+
+		remove)
+			if [[ ${cur} != -* ]] ; then
+				COMPREPLY=( $(compgen -f "${cur}") )
+				return 0
+			else
+				opts="--help"
+				COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+				return 0
+			fi
 		;;
 
 		--verbosity)
