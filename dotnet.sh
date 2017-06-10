@@ -64,6 +64,10 @@ _dotnet()
 			_dotnet_list
 		;;
 
+		ef)
+			_dotnet_ef
+		;;
+
 		*)
 		;;
 	esac
@@ -460,6 +464,148 @@ _dotnet_list()
 		COMPREPLY=( $(compgen -W "${opts}" ${cur}) )
 		return 0
 	fi
+}
+
+_dotnet_ef()
+{
+	local efopts efopts2
+	efopts="--project --startup-project --framework --configuration --msbuildprojectextensionspath --environment --verbose --no-color --prefix-output --help"
+  efopts2="--context ${efopts}"
+
+	case "${prev}" in
+		ef)
+			if [[ ${cur} != -* ]] ; then
+				opts="database dbcontext migrations"
+				COMPREPLY=( $(compgen -W "${opts}" ${cur}) )
+				return 0
+			else
+				opts="--help"
+				COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+				return 0
+			fi
+		;;
+
+		database)
+			if [[ ${cur} != -* ]] ; then
+				opts="drop update"
+				COMPREPLY=( $(compgen -W "${opts}" ${cur}) )
+				return 0
+			else
+				opts="--help"
+				COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+				return 0
+			fi
+		;;
+
+		dbcontext)
+			if [[ ${cur} != -* ]] ; then
+				opts="info list scaffold"
+				COMPREPLY=( $(compgen -W "${opts}" ${cur}) )
+				return 0
+			else
+				opts="--help"
+				COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+				return 0
+			fi
+		;;
+
+		migrations)
+			if [[ ${cur} != -* ]] ; then
+				opts="add remove list script"
+				COMPREPLY=( $(compgen -W "${opts}" ${cur}) )
+				return 0
+			else
+				opts="--help"
+				COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+				return 0
+			fi
+		;;
+
+		--verbosity)
+			opts="quiet minimal normal detailed diagnostic"
+			COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+			return 0
+		;;
+
+		*)
+			opts="--version --help --verbose --no-color --prefix-output"
+			COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+			return 0
+		;;
+
+	esac
+
+	case "${prev2}" in
+		migrations)
+			case "${prev}" in
+				add)
+					opts="--output-dir --json ${efopts2}"
+					COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+					return 0
+				;;
+
+				remove)
+					opts="--force --json  ${efopts2}"
+					COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+					return 0
+				;;
+
+				list)
+					opts="--json ${efopts2}"
+					COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+					return 0
+				;;
+
+				script)
+					opts="--output --idempotent ${efopts2}"
+					COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+					return 0
+				;;
+
+			esac
+		;;
+
+		database)
+			case "${prev}" in
+				drop)
+					opts="--force --dry-run ${efopts2}"
+					COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+					return 0
+				;;
+
+				update)
+					opts="${efopts2}"
+					COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+					return 0
+				;;
+
+			esac
+		;;
+
+		dbcontext)
+			case "${prev}" in
+				info)
+					opts="--json ${efopts2}"
+					COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+					return 0
+				;;
+
+				list)
+					opts="--json ${efopts}"
+					COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+					return 0
+				;;
+
+				scaffold)
+					opts="--data-annotations --context --force --output-dir --schema --table --json ${efopts}"
+					COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+					return 0
+				;;
+
+			esac
+		;;
+	esac
+
 }
 
 complete -o nospace -F _dotnet dotnet
