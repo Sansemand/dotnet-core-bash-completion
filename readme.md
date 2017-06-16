@@ -2,11 +2,11 @@
 
 ### Work in progress
 
-![Demo](https://github.com/Sansemand/dotnet-core-bash-completion/blob/master/demo.gif?raw=true)
+![Demo](https://github.com/beryldev/dotnet-core-bash-completion/blob/master/demo.gif?raw=true)
 
 ### Installation
 ```
-$ git clone https://github.com/Sansemand/dotnet-core-bash-completion.git
+$ git clone https://github.com/beryldev/dotnet-core-bash-completion.git
 $ cd dotnet-core-bash-completion
 $ sudo ./install.sh
 ```
